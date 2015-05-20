@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Dan's blog</title><link href="http://warmspringwinds.github.io/blog/" rel="alternate"></link><link href="http://warmspringwinds.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://warmspringwinds.github.io/blog/</id><updated>2010-12-03T10:20:00+01:00</updated><entry><title>Logistic Regression</title><link href="http://warmspringwinds.github.io/blog/my-super-post.html" rel="alternate"></link><updated>2010-12-03T10:20:00+01:00</updated><author><name>Alexis Metaireau</name></author><id>tag:warmspringwinds.github.io,2010-12-03:blog/my-super-post.html</id><summary type="html">&lt;p&gt;Logistic regression is a discriminative classification model.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Dan's blog</title><link href="http://warmspringwinds.github.io/blog/" rel="alternate"></link><link href="http://warmspringwinds.github.io/blog/feeds/all.atom.xml" rel="self"></link><id>http://warmspringwinds.github.io/blog/</id><updated>2015-05-20T20:38:00+02:00</updated><entry><title>Logistic Regression</title><link href="http://warmspringwinds.github.io/blog/logistic-regression.html" rel="alternate"></link><updated>2015-05-20T20:38:00+02:00</updated><author><name>Pakhomov Daniil</name></author><id>tag:warmspringwinds.github.io,2015-05-20:blog/logistic-regression.html</id><summary type="html">&lt;p&gt;Logistic regression is a discriminative classification model.&lt;/p&gt;
 &lt;h2&gt;Types of classification models&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -104,4 +104,4 @@ is called &lt;strong&gt;softmax function&lt;/strong&gt;.&lt;/p&gt;
         "}";
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
-&lt;/script&gt;</summary><category term="thats"></category><category term="awesome"></category></entry></feed>
+&lt;/script&gt;</summary><category term="machine_learning"></category></entry></feed>
