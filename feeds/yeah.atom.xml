@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Dan's blog</title><link href="http://warmspringwinds.github.io/blog/" rel="alternate"></link><link href="http://warmspringwinds.github.io/blog/feeds/yeah.atom.xml" rel="self"></link><id>http://warmspringwinds.github.io/blog/</id><updated>2010-12-03T10:20:00+01:00</updated><entry><title>Logistic Regression</title><link href="http://warmspringwinds.github.io/blog/my-super-post.html" rel="alternate"></link><updated>2010-12-03T10:20:00+01:00</updated><author><name>Alexis Metaireau</name></author><id>tag:warmspringwinds.github.io,2010-12-03:blog/my-super-post.html</id><summary type="html">&lt;p&gt;Logistic regression is a discriminative classification model.&lt;/p&gt;
+&lt;h2&gt;Types of classification models&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Generative classification models&lt;/strong&gt;: This approach models the class conditional densities
+    &lt;span class="math"&gt;\(p(\textbf{x}|C_k)\)&lt;/span&gt; and class priors &lt;span class="math"&gt;\(p(C_k)\)&lt;/span&gt;. And knowing these two quantities,
+    we can get the posterior class probabilities, using &lt;a href="http://en.wikipedia.org/wiki/Bayes%27_theorem"&gt;Bayes theorem&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{eq}
+    p(C_k|\textbf{x})=\frac{p(\textbf{x}|C_k)p(C_k)}{p(\textbf{x})}
+\end{equation}&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;This model has more parameters and will spend more time on training with high dimensional data.
+The marginal density &lt;span class="math"&gt;\(p(\textbf{x})\)&lt;/span&gt; can be used to detect new data points that has low probability and, therefore, our classification won't be precise in that case. by &lt;span class="math"&gt;\(\ref{eq}\)&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Discriminative models&lt;/strong&gt;: This models find &lt;span class="math"&gt;\(p(C_k|\textbf{x})\)&lt;/span&gt; probabilities directly.
+    In this case make decisions based only on the posterior class probabilities. Probabilites
+    can help for example in case when we have a point that has nearly equal probabilities for
+    each class. In that case we can avoid making decisions because they will be not so accurate.
+    We won't be able to do it when using discriminant functions that will be described in the next step.
+    This model is also easier to train than generative model.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Discriminant function approach&lt;/strong&gt;: Approach that is only has a discriminative function
+    &lt;span class="math"&gt;\(f(\textbf{x})\)&lt;/span&gt; that maps each input to some particular class &lt;span class="math"&gt;\(C_k\)&lt;/span&gt;. This approach
+    doesn't have a probabilistic interpretation and usually faster to train. You gain speed but loose
+    probabilistic interpretation that can be useful in some cases.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Deriving the logistic regression equation&lt;/h2&gt;
+&lt;p&gt;First, let's consider the example of two classes. The posterior probability of class &lt;span class="math"&gt;\(C_1\)&lt;/span&gt;
+can be written as:&lt;/p&gt;
+&lt;div class="math"&gt;$$p(C_1|\textbf{x}) = \frac{p(\textbf{x}|C_1)p(C_1)}{p(\textbf{x}|C_1)p(C_1) + p(\textbf{x}|C_2)p(C_2)}$$&lt;/div&gt;
+&lt;p&gt;Then, we will use a different presentation of the same equation:&lt;/p&gt;
+&lt;div class="math"&gt;$$p(C_1|\textbf{x}) = \sigma(a(\textbf{x}))$$&lt;/div&gt;
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{logistic}
+    \sigma(a) = \frac{1}{1 + e^{-a(\textbf{x})}}
+\end{equation}&lt;/div&gt;
+&lt;div class="math"&gt;$$a(\textbf{x}) = ln\left(\frac{p(\textbf{x}|C_1)p(C_1)}{p(\textbf{x}|C_2)p(C_2)}\right)$$&lt;/div&gt;
+&lt;p&gt;This is the same equation and you can check that by substituting everything back.&lt;/p&gt;
+&lt;p&gt;And for the case of &lt;span class="math"&gt;\(K\gt2\)&lt;/span&gt;:&lt;/p&gt;
+&lt;div class="math"&gt;$$p(C_k|\textbf{x}) = \frac{p(\textbf{x}|C_k)p(C_k)}{\sum_{j=1}^{K}p(\textbf{x}|C_j)p(C_j)}$$&lt;/div&gt;
+&lt;p&gt;We will rewrite it as:&lt;/p&gt;
+&lt;div class="math"&gt;\begin{equation} \label{softmax}
+    p(C_k|\textbf{x}) = \frac{e^{~a_k(\textbf{x})}}{\sum_{j=1}^{K}e^{~a_j(\textbf{x})}}
+\end{equation}&lt;/div&gt;
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;div class="math"&gt;$$a_j(\textbf{x}) = ln\left( p(\textbf{x}|C_j)p(C_j)\right)$$&lt;/div&gt;
+&lt;p&gt;The function [&lt;span class="math"&gt;\(\ref{logistic}\)&lt;/span&gt;] is called &lt;strong&gt;logistic function&lt;/strong&gt; and function [&lt;span class="math"&gt;\(\ref{softmax}\)&lt;/span&gt;]
+is called &lt;strong&gt;softmax function&lt;/strong&gt;.&lt;/p&gt;
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width &lt; 768) ? "left" : align;
+        indent = (screen.width &lt; 768) ? "0em" : indent;
+        linebreak = (screen.width &lt; 768) ? 'true' : linebreak;
+    }
+    
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;</summary><category term="thats"></category><category term="awesome"></category></entry></feed>
